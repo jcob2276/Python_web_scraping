@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "imdb python web", "imdb python web.pyproj", "{3A2C3C74-7316-4F22-996A-507D71BC2A2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A2C3C74-7316-4F22-996A-507D71BC2A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A2C3C74-7316-4F22-996A-507D71BC2A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19DFB615-B9EA-4C5F-B9D0-97E9EAC1FE3F}
+	EndGlobalSection
+EndGlobal
