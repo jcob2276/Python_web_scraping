@@ -12,12 +12,15 @@ try:
     year_stats = {}
     rating_stats = {}
     director_stats = {}
+    actor_stats = {}
 
     for movie in movies:
         name = movie.find('td', class_='titleColumn').a.text
         rank = movie.find('td', class_='titleColumn').get_text(strip=True).split('.')[0]
         year = int(movie.find('td', class_='titleColumn').span.text.strip('()'))
         rating = float(movie.find('td', class_='ratingColumn imdbRating').strong.text)
+        actors = movie.find('td', class_='titleColumn').find('a')['title'].split(', ')[1:]
+        
 
         # Grouping movies by decade
         decade = year // 10 * 10
@@ -42,6 +45,13 @@ try:
         else:
             director_stats[director] = 1
 
+        for actor in actors:
+            if actor in actor_stats:
+                actor_stats[actor] += 1
+            else:
+                actor_stats[actor] = 1
+
+
     # Printing movie counts by decade
     for decade, count in sorted(year_stats.items()):
         print(f'{decade}: {count}')
@@ -55,5 +65,14 @@ try:
     for director, count in sorted_directors:
         print(f'{director}: {count}')
 
+    sorted_actors = sorted(actor_stats.items(), key=lambda x: x[1], reverse=True)
+
+    for actor, count in sorted_actors:
+        print(f'{actor}: {count}')
+
+
+
 except Exception as e:
     print(e)
+
+
