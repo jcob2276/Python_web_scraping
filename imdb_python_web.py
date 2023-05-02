@@ -5,24 +5,55 @@ try:
     source = requests.get('https://www.imdb.com/chart/top/?ref_=nv_mv_250')
     source.raise_for_status()
 
-    soup = BeautifulSoup(source.text,'html.parser')
+    soup = BeautifulSoup(source.text, 'html.parser')
 
     movies = soup.find('tbody', class_='lister-list').find_all('tr')
-   # print(len(movies))
+
+    year_stats = {}
+    rating_stats = {}
+    director_stats = {}
 
     for movie in movies:
+        name = movie.find('td', class_='titleColumn').a.text
+        rank = movie.find('td', class_='titleColumn').get_text(strip=True).split('.')[0]
+        year = int(movie.find('td', class_='titleColumn').span.text.strip('()'))
+        rating = float(movie.find('td', class_='ratingColumn imdbRating').strong.text)
 
-        name = movie.find('td', class_="titleColumn").a.text
+        # Grouping movies by decade
+        decade = year // 10 * 10
+        decade_str = f'{decade}s'
 
-        #title = name.text.strip()
+        if decade_str in year_stats:
+            year_stats[decade_str] += 1
+        else:
+            year_stats[decade_str] = 1
 
-        rank = movie.find('td',class_="titleColumn").get_text(strip=True).split('.')[0]
-                                                                                
-        year = movie.find('td', class_="titleColumn").span.text.strip('()')
+        # Counting movies by rating
+        rating_str = f'{rating:.1f}'
+        if rating_str in rating_stats:
+            rating_stats[rating_str] += 1
+        else:
+            rating_stats[rating_str] = 1
         
-        rating = movie.find('td', class_="ratingColumn imdbRating").strong.text
+        # Counting movies by director
+        director = movie.find('td', class_='titleColumn').a['title'].split(',')[0]
+        if director in director_stats:
+            director_stats[director] += 1
+        else:
+            director_stats[director] = 1
 
-        print(rank, name, year, rating)
-        
+    # Printing movie counts by decade
+    for decade, count in sorted(year_stats.items()):
+        print(f'{decade}: {count}')
+
+    # Printing movie counts by rating
+    for rating, count in sorted(rating_stats.items()):
+        print(f'{rating}: {count}')
+
+    # Printing movie counts by director
+    sorted_directors = sorted(director_stats.items(), key=lambda x: x[1], reverse=True)
+    for director, count in sorted_directors:
+        print(f'{director}: {count}')
+
 except Exception as e:
     print(e)
